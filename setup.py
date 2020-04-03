@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="eehelper",
-    version="0.0.1",
+    version="0.1.1",
     author="Richard Massey",
     author_email="rm885@nau.edu",
     description="Helper library for Google Earth Engine python API scripts",
@@ -14,11 +14,11 @@ setuptools.setup(
     url="https://github.com/masseyr/eehelper",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=2.7.11',
+    python_requires='>=3.6',
     install_requires=[
         'earthengine-api>=0.1.175',
     ]
