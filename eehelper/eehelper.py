@@ -10,7 +10,7 @@ class EEHelper(object):
     """
     def __init__(self,
                  const=0.5,
-                 scale_factor=10000,
+                 scale_factor=1,
                  index_list=None,
                  composite_index='NDVI',
                  composite_function='median'):
@@ -346,6 +346,7 @@ class EEHelper(object):
     def get_images(self,
                    collection,
                    bounds=None,
+                   year=None,
                    start_date=None,
                    end_date=None,
                    start_julian=1,
@@ -357,6 +358,7 @@ class EEHelper(object):
         Make ee.ImageCollection object based on given common parameters
         :param collection: ee.ImageCollection object
         :param bounds: ee.Geometry object area of interest
+        :param year: If processing for the entire year specify this instead of start_date and end_date
         :param start_date: starting date for filtering collection in format 'YYYY-MM-DD'
         :param end_date: ending date for filtering collection in format 'YYYY-MM-DD'
         :param start_julian: Start of julian date to filter collection on annual basis (Default:1)
@@ -372,6 +374,10 @@ class EEHelper(object):
         :returns ee.ImageCollection object
         """
         coll = ee.ImageCollection(collection)
+
+        if year is not None:
+            start_date = '{}-01-01'.format(str(year))
+            end_date = '{}-12-31'.format(str(year))
 
         if bounds is not None:
             coll = coll.filterBounds(bounds)
@@ -402,6 +408,7 @@ class EEHelper(object):
     def composite_image(self,
                         collection,
                         region=None,
+                        band_selector=None,
                         band_names=None):
         """
         function to generate a maximum value composite image
@@ -410,10 +417,11 @@ class EEHelper(object):
 
         :param collection: ee.ImageCollection
         :param region: Region (ee.Geometry or ee.Feature) to clip the composite image
-        :param band_names: List of band names to select from each image (band selector)
+        :param band_selector: List of band selectors to select from each image
+        :param band_names: list of names to rename the selected bands with
         :returns ee.Image object
         """
-
+        collection = ee.ImageCollection(collection).map(lambda x: x.multiply(ee.Image(self.scale_factor)))
         if self.composite_function == 'mean' or self.composite_function == 'rms':
             reducer = ee.Reducer.mean()
         elif self.composite_function == 'median':
@@ -532,7 +540,7 @@ class EEHelper(object):
 
         res = task.start()
         if verbose:
-            sys.stdout.write(res)
+            sys.stdout.write(task)
 
         if save_metadata:
             with open(metadata_folder + '/' + img_id + '.txt', 'w') as metadata_file_ptr:
