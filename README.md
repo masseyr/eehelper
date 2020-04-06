@@ -1,4 +1,4 @@
-# eehelper v0.1.1
+# eehelper v0.1.2
 
 [![DOI](https://zenodo.org/badge/252678920.svg)](https://zenodo.org/badge/latestdoi/252678920)
 
