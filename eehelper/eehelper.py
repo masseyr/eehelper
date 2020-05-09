@@ -367,9 +367,9 @@ class EEHelper(object):
                             (Default: ['NDVI', 'NDWI', 'SAVI', 'VARI', 'NBR'])
         :param scale_factor: Scale factor for added indices bands (Default: 10000)
         :param kwargs: Keyword arguments for mapping functions on the collection
-                       Can be used only for valid collection-mappable functions in EEFunc
-                           map='ls_sr_band_correction'
-                           map='ls_sr_only_clear'
+                       Can be used only for valid collection-mappable functions in EEHelper
+                           map='ls_sr_band_correction',
+                           map='ls_sr_only_clear',
                            map='add_indices'
         :returns ee.ImageCollection object
         """
