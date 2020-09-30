@@ -1,4 +1,4 @@
-## Earth Engine Helper v0.1.2
+## Earth Engine Helper v0.1.3
 
 [![DOI](https://zenodo.org/badge/252678920.svg)](https://zenodo.org/badge/latestdoi/252678920)
 
