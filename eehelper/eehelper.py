@@ -19,9 +19,9 @@ class EEHelper(object):
         :param scale_factor: Scale factor to multiply input ee.Image object with
         :param index_list: list of names of indices to add
                  valid names: ['EVI', 'NDVI', 'SAVI', 'NDWI', 'NBR', 'VARI']
-                 default: None
+                 default: None (will list all indices)
         :param composite_index: Index to base the composite on (default: 'NDVI',
-                                                                valid: 'NBR','EVI','SAVI','NDWI','NDVI')
+                                                                valid: 'NBR','VARI','EVI','SAVI','NDWI','NDVI')
         :param composite_function: Function to use for compositing (default: 'median',
                                                                     valid: 'mean','median','min','max',
                                                                     'sum','rms','diag',
@@ -30,7 +30,8 @@ class EEHelper(object):
         """
         self.scale_factor = scale_factor
         self.const = const
-        self.index_list = index_list
+        self.index_list = index_list if index_list is not None \
+            else ['EVI', 'NDVI', 'SAVI', 'NDWI', 'NBR', 'VARI']
         self.composite_index = composite_index
         self.composite_function = composite_function
 
